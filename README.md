@@ -1,21 +1,21 @@
 # ExpScheduler
 
-**TODO: Add description**
+Experiments with a dynamic scheduler in Elixir using Dynamic Supervisor and Genserver.
 
-## Installation
+  - User can add, remove, and modifi a schedule using CLI.
+  - Schedule will be persisted in a Postgres DB using Ecto. And it can be read at app's startup time.
+  - Experiment with ways to gentle shutdown/stop a GenServer from Supervision tree.
+  - Test sync, and async operation using File.write.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `exp_scheduler` to your list of dependencies in `mix.exs`:
+## Advanced Features
 
-```elixir
-def deps do
-  [
-    {:exp_scheduler, "~> 0.1.0"}
-  ]
-end
-```
+  - Use Elixir's Registry to store the scheduled task name as string (not to overflow the :atom table)
+  - Calculate the next duration to Process.send_after(miliseconds) to avoid time drifting between intervals.
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/exp_scheduler](https://hexdocs.pm/exp_scheduler).
+## References
+  - [Thoughtbot's blog: Using Registry to map process' name to PID avoid overflowing the atom table](https://thoughtbot.com/blog/how-to-start-processes-with-dynamic-names-in-elixir)
+  - [SchedEx: Simple and Powerful scheduling library for Elixir](https://github.com/SchedEx/SchedEx)
+  - [Quantum: Full feature, maybe complicated Cron-like job scheduler for Elixir](https://hexdocs.pm/quantum/readme.html)
+  - [Grapevine genserver nightly task - anti-drifting](https://smartlogic.io/blog/genserver-nightly-task/)
+
 
