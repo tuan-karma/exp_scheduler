@@ -8,11 +8,12 @@ defmodule ExpScheduler.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      ExpScheduler.Repo
+      ExpScheduler.Repo,
+      {Registry, keys: :unique, name: WorkerRegistry},
+      ExpScheduler.Supervision.WorkerSupervisor,
+      ExpScheduler.Supervision.WorkersStarter
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: ExpScheduler.Supervisor]
     Supervisor.start_link(children, opts)
   end
